@@ -20,4 +20,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/countries', [CountryController::class, 'index']);
-Route::get('/country/{country:code}', [CountryController::class, 'show']);
+Route::get('/country/{country}', [CountryController::class, 'show']);
+Route::post('/country/{country}/{category}', [CountryController::class, 'toggleCategory'])->withoutScopedBindings();

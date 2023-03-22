@@ -20,6 +20,14 @@ class Category extends Model
     ];
 
     /**
+     * Get the route key for the model.
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'name';
+    }
+
+    /**
      * The countries that belong to the category.
      */
     public function countries(): BelongsToMany

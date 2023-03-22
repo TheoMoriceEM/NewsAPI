@@ -21,6 +21,14 @@ class Country extends Model
     ];
 
     /**
+     * Get the route key for the model.
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'code';
+    }
+
+    /**
      * The categories that belong to the country.
      */
     public function categories(): BelongsToMany

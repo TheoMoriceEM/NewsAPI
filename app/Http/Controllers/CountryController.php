@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\CountryCollection;
 use App\Http\Resources\CountryResource;
+use App\Models\Category;
 use App\Models\Country;
 use Illuminate\Http\Request;
 
@@ -63,5 +64,16 @@ class CountryController extends Controller
     public function destroy(Country $country)
     {
         //
+    }
+
+    /**
+     * Attach or detach a category
+     * @param Country $country
+     * @param Category $category
+     * @return array
+     */
+    public function toggleCategory(Country $country, Category $category): array
+    {
+        return $country->categories()->toggle($category);
     }
 }
