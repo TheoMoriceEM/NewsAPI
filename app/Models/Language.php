@@ -20,6 +20,14 @@ class Language extends Model
     ];
 
     /**
+     * Get the route key for the model.
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'language';
+    }
+
+    /**
      * The countries that belong to the language.
      */
     public function countries(): BelongsToMany
