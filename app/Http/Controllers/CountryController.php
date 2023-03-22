@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\CountryCollection;
 use App\Models\Country;
 use Illuminate\Http\Request;
 
@@ -10,9 +11,9 @@ class CountryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): CountryCollection
     {
-        //
+        return new CountryCollection(Country::all());
     }
 
     /**
