@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Language extends Model
 {
@@ -17,4 +18,12 @@ class Language extends Model
     protected $fillable = [
         'language',
     ];
+
+    /**
+     * The countries that belong to the language.
+     */
+    public function countries(): BelongsToMany
+    {
+        return $this->belongsToMany(Country::class);
+    }
 }
