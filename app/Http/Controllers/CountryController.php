@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\CountryCollection;
+use App\Http\Resources\CountryResource;
 use App\Models\Country;
 use Illuminate\Http\Request;
 
@@ -35,9 +36,9 @@ class CountryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Country $country)
+    public function show(Country $country): CountryResource
     {
-        //
+        return new CountryResource($country);
     }
 
     /**

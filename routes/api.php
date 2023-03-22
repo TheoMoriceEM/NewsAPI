@@ -20,3 +20,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/countries', [CountryController::class, 'index']);
+Route::get('/country/{country:code}', [CountryController::class, 'show']);
