@@ -2,9 +2,6 @@
 
 namespace App\Repositories\Api;
 
-use App\Models\Category;
-use App\Models\Country;
-use App\Models\Language;
 use NewsdataIO\NewsdataApi;
 
 class NewsDataRepository
@@ -16,12 +13,13 @@ class NewsDataRepository
         $this->newsData = new NewsdataApi(env('NEWS_DATA_API_KEY'));
     }
 
-    public function getLatestNews(Country $country, Language $language, Category $category): object|array
+    public function getLatestNews(string $countryCode, string $languages, string $categories, string $nextPage = null): object|array
     {
         $params = [
-            'country'  => $country->code,
-            'category' => $category->name,
-            'language' => $language->language,
+            'country'  => $countryCode,
+            'category' => $categories,
+            'language' => $languages,
+            'page'     => $nextPage,
         ];
 
         return $this->newsData->get_latest_news($params);
