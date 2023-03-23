@@ -7,6 +7,7 @@ use App\Models\Country;
 use App\Models\Language;
 use App\Repositories\Api\NewsDataRepository;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Redis;
 
 class NewsDataApiController extends Controller
 {
@@ -17,6 +18,8 @@ class NewsDataApiController extends Controller
 
     public function getLatestNews(Country $country, Language $language = null, Category $category = null, int $page = 1): JsonResponse
     {
+        $nextPage = null;
+
         if ($language) {
             $languagesParam = $language->language;
         } else {
@@ -35,7 +38,18 @@ class NewsDataApiController extends Controller
             })->implode(',');
         }
 
-        $data = $this->newsDataRepository->getLatestNews($country->code, $languagesParam, $categoriesParam);
+        if ($page > 1) {
+            do {
+                $nextPage = Redis::get("$country->code:$page");
+                if (!$nextPage) {
+                    $page--;
+                }
+            } while (!$nextPage && $page > 1);
+        }
+
+        $data = $this->newsDataRepository->getLatestNews($country->code, $languagesParam, $categoriesParam, $nextPage);
+
+        Redis::set($country->code . ':' . $page + 1, $data->nextPage);
 
         return response()->json($data);
     }

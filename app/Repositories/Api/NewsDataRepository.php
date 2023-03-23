@@ -13,7 +13,7 @@ class NewsDataRepository
         $this->newsData = new NewsdataApi(env('NEWS_DATA_API_KEY'));
     }
 
-    public function getLatestNews(string $countryCode, string $languages, string $categories, string $nextPage = null): object|array
+    public function getLatestNews(string $countryCode, string $languages, string $categories, ?string $nextPage): object|array
     {
         $params = [
             'country'  => $countryCode,

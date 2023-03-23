@@ -23,5 +23,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/countries', [CountryController::class, 'index']);
 Route::get('/country/{country}', [CountryController::class, 'show']);
 Route::post('/country/{country}/{category}', [CountryController::class, 'toggleCategory'])->withoutScopedBindings();
-Route::get('/country/{country}/{language}/{category}', [NewsDataApiController::class, 'getLatestNews']);
+Route::get('/country/{country}/{language}/{category?}', [NewsDataApiController::class, 'getLatestNews']);
 Route::get('/news/{country}/{page?}', [NewsDataApiController::class, 'getLatestNews']);
