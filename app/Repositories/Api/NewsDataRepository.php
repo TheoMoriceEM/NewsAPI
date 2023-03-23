@@ -6,6 +6,8 @@ use NewsdataIO\NewsdataApi;
 
 class NewsDataRepository
 {
+    public const STATUS_SUCCESS = 'success';
+
     protected NewsdataApi $newsData;
 
     public function __construct()

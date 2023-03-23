@@ -49,7 +49,9 @@ class NewsDataApiController extends Controller
 
         $data = $this->newsDataRepository->getLatestNews($country->code, $languagesParam, $categoriesParam, $nextPage);
 
-        Redis::set($country->code . ':' . $page + 1, $data->nextPage);
+        if ($data->status === $this->newsDataRepository::STATUS_SUCCESS) {
+            Redis::set($country->code . ':' . $page + 1, $data->nextPage);
+        }
 
         return response()->json($data);
     }
