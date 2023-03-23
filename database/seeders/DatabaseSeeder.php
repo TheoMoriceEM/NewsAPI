@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
-    private array $sampleData = [
+    private const SAMPLE_DATA = [
         [
             'name'     => 'Belgium',
             'code'     => 'be',
@@ -40,7 +40,7 @@ class DatabaseSeeder extends Seeder
         ],
     ];
 
-    private array $categories = [
+    private const CATEGORIES = [
         'business',
         'entertainment',
         'environment',
@@ -60,13 +60,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        foreach ($this->categories as $category) {
+        foreach (self::CATEGORIES as $category) {
             DB::table('categories')->insert([
                 'name' => $category,
             ]);
         }
 
-        foreach ($this->sampleData as $country) {
+        foreach (self::SAMPLE_DATA as $country) {
             $countryId = DB::table('countries')->insertGetId([
                 'name' => $country['name'],
                 'code' => $country['code'],
