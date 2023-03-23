@@ -20,8 +20,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/countries', [CountryController::class, 'index']);
-Route::get('/country/{country}', [CountryController::class, 'show']);
-Route::post('/country/{country}/{category}', [CountryController::class, 'toggleCategory'])->withoutScopedBindings();
-Route::get('/country/{country}/{language}/{category?}', [NewsDataApiController::class, 'getLatestNews']);
-Route::get('/news/{country}/{page?}', [NewsDataApiController::class, 'getLatestNews']);
+Route::get('/countries', [CountryController::class, 'index'])->name('country_index');
+Route::get('/country/{country}', [CountryController::class, 'show'])->name('country_show');
+Route::post('/country/{country}/{category}', [CountryController::class, 'toggleCategory'])->withoutScopedBindings()->name('country_category_toggle');
+Route::get('/country/{country}/{language}/{category?}', [NewsDataApiController::class, 'getLatestNews'])->name('latest_news');
+Route::get('/news/{country}/{page?}', [NewsDataApiController::class, 'getLatestNews'])->name('latest_news_by_page');
