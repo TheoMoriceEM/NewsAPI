@@ -34,7 +34,7 @@ Route::controller(NewsDataApiController::class)->group(function () {
     Route::get('/country/{country}/{language}/{category?}', 'getLatestNews')->name('latest_news')->missing(function () {
         return response()->json(['message' => 'A resource has not been found in the database'], 404);
     });
-    Route::get('/news/{country}/{page?}', 'getLatestNews')->whereNumber('page')->name('latest_news_by_page')->missing(function () {
+    Route::get('/news/{country}/{page?}', 'getLatestNews')->where('page', '[1-9]+')->name('latest_news_by_page')->missing(function () {
         return response()->json(['message' => 'Country not found in the database'], 404);
     });
 });
