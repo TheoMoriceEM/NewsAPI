@@ -40,6 +40,10 @@ class DatabaseSeeder extends Seeder
         ],
     ];
 
+    /**
+     * Categories cannot be retrieved from the API, whether globally or for a specific country,
+     * that's why we simply got the list manually from the API documentation (https://newsdata.io/documentation).
+     */
     private const CATEGORIES = [
         'business',
         'entertainment',
@@ -80,6 +84,7 @@ class DatabaseSeeder extends Seeder
                     'language_id' => $language->id,
                 ]);
             }
+            // Assigning all categories to all countries since they all contain news for each country. There's no real way to decide which categories should be assigned to which countries.
             foreach (Category::all() as $category) {
                 DB::table('category_country')->insert([
                     'category_id' => $category->id,
