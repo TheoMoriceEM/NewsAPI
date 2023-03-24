@@ -20,8 +20,21 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/countries', [CountryController::class, 'index'])->name('country_index');
-Route::get('/country/{country}', [CountryController::class, 'show'])->name('country_show');
-Route::post('/country/{country}/{category}', [CountryController::class, 'toggleCategory'])->withoutScopedBindings()->name('country_category_toggle');
-Route::get('/country/{country}/{language}/{category?}', [NewsDataApiController::class, 'getLatestNews'])->name('latest_news');
-Route::get('/news/{country}/{page?}', [NewsDataApiController::class, 'getLatestNews'])->whereNumber('page')->name('latest_news_by_page');
+Route::controller(CountryController::class)->group(function () {
+    Route::get('/countries', 'index')->name('country.index');
+    Route::get('/country/{country}', 'show')->name('country.show')->missing(function () {
+        return response()->json(['message' => 'Country not found in the database'], 404);
+    });
+    Route::post('/country/{country}/{category}', 'toggleCategory')->withoutScopedBindings()->name('country_category.toggle')->missing(function () {
+        return response()->json(['message' => 'Country or category not found in the database'], 404);
+    });
+});
+
+Route::controller(NewsDataApiController::class)->group(function () {
+    Route::get('/country/{country}/{language}/{category?}', 'getLatestNews')->name('latest_news')->missing(function () {
+        return response()->json(['message' => 'A resource has not been found in the database'], 404);
+    });
+    Route::get('/news/{country}/{page?}', 'getLatestNews')->whereNumber('page')->name('latest_news_by_page')->missing(function () {
+        return response()->json(['message' => 'Country not found in the database'], 404);
+    });
+});
